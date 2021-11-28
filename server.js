@@ -88,8 +88,8 @@ app.post('/login', (require, response) => {
     .catch(err => {
       response.status(500).json({error: err.message});
     });
-;
-})
+
+});
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
