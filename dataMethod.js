@@ -24,8 +24,17 @@ Otherwise, evaluates to true and allows user access to account*/
   Otherwise returns as true and allows user access to account*/
   else if (!pass && email) {
     for (user of users) {
-
+      if(Number(userID) === Number(user.id) && request.body.input === user.password) {
+        response.cookie("authentic_password", "true");
+        response.send("password correct");
+        return;
+      }
     }
+    response.status(401).send("The password entered is invalid");
+  } else {
+    response.send({ text: "password correct", name: user.name});
+    return;
   }
 }
 
+module.exports = { dataMethod };
