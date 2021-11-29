@@ -59,7 +59,7 @@ app.get("/", (require, response) => {
   response.render("index", {uLogin});
 });
 
-app.get('/login', (require, response) => {
+app.get('/login', (require, response) => { // to be determined page layout (redirect?)
   require.session.user = require.query.user;
   const uLogin = require.session.user;
   response.redirect('/');
@@ -89,6 +89,24 @@ app.post('/login', (require, response) => {
       response.status(500).json({error: err.message});
     });
 
+});
+
+app.post ("/register", (require, response) => {
+  const userEmail = require.body.userEmail;
+  const userPass = require.body.userPass;
+  if (userPass === undefined && userEmail === " ") {
+    response.status(403).send("Please enter an email address");
+    return;
+  }
+  if (userPass === " " && userEmail === undefined) {
+    response.status(403).send("Please enter your password");
+    return;
+  }
+});
+
+app.post("/logout", (require, response) => {
+  require.session = null;
+  response.redirect("index");
 });
 
 app.listen(PORT, () => {
