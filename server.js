@@ -41,40 +41,44 @@ app.use(express.static("public"));
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
 const usersRoutes = require("./routes/users");
+const authRoutes = require("./routes/auth");
 const widgetsRoutes = require("./routes/widgets");
 const { response } = require("express");
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
 app.use("/api/users", usersRoutes(db));
+app.use("/api/auth", authRoutes(db));
 app.use("/api/widgets", widgetsRoutes(db));
 // Note: mount other resources here, using the same pattern above
 
 // Home page
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
+2
 
-app.get("/", (require, response) => {
-  const uLogin = require.session.user;
-  response.render("index", {uLogin});
+// app.get('/login', (require, response) => { // to be determined page layout (redirect?)
+//   require.session.user = require.query.user;
+//   const uLogin = require.session.user;
+//   response.redirect('/');
+// })
+
+app.get("/login", (req, res) => {
+  const uLogin = req.session.user;
+  res.render("login", {uLogin});
 });
 
-app.get('/login', (require, response) => { // to be determined page layout (redirect?)
-  require.session.user = require.query.user;
-  const uLogin = require.session.user;
-  response.redirect('/');
-})
-
-app.post('/login', (require, response) => {
-  const userEmail = require.body.email;
-  const userPass = require.body.password;
+app.post('/login', (req, res) => {
+  const userEmail = req.body.email;
+  const userPass = req.body.password;
+  console.log("=======", req.body);
 
   if(userEmail === " " && userPass === undefined) {
-    response.status(403).send("Please enter your email");
+    res.status(403).send("Please enter your email");
     return;
   }
   if(userEmail === undefined && userPass === " ") {
-    response.status(403).send("Please enter your password");
+    res.status(403).send("Please enter your password");
     return;
   }
 
@@ -82,7 +86,7 @@ app.post('/login', (require, response) => {
 
   db.query(query)
     .then(data => {
-      dataMethod(require, response, data.rows);
+      dataMethod(req, response, data.rows);
       return;
     })
     .catch(err => {
@@ -91,18 +95,24 @@ app.post('/login', (require, response) => {
 
 });
 
-app.post ("/register", (require, response) => {
-  const userEmail = require.body.userEmail;
-  const userPass = require.body.userPass;
-  if (userPass === undefined && userEmail === " ") {
-    response.status(403).send("Please enter an email address");
-    return;
-  }
-  if (userPass === " " && userEmail === undefined) {
-    response.status(403).send("Please enter your password");
-    return;
-  }
+app.get("/register", (req, res) => {
+  // getUserByEmail("vega@gmail.com", db);
+  const uLogin = req.session.user;
+  res.render("register", {uLogin});
 });
+
+// app.post ("/register", (require, response) => {
+//   const userEmail = require.body.userEmail;
+//   const userPass = require.body.userPass;
+//   if (userPass === undefined && userEmail === " ") {
+//     response.status(403).send("Please enter an email address");
+//     return;
+//   }
+//   if (userPass === " " && userEmail === undefined) {
+//     response.status(403).send("Please enter your password");
+//     return;
+//   }
+// });
 
 app.post("/logout", (require, response) => {
   require.session = null;
