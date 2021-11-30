@@ -37,22 +37,15 @@ module.exports = (db) => {
           .json({ error: err.message });
       });
   //creating new map
-  router.post('/newMap', (req, res) => {
-    const newMap = req.body;
-    user.password = bcrypt.hashSync(user.password, 12);
-    database.addUser(user)
-    .then(user => {
-      if (!user) {
-        res.send({error: "error"});
-        return;
-      }
-      req.session.userId = user.id;
-      res.send("🤗");
-    })
-    .catch(e => res.send(e));
-  });
+  // router.post('/new', (req, res) => {
+  //     console.log(req.query);
+  //     res.render("createMap", req.query);
 
+  // });
 
+  router.get("/new", (req, res) => {
+    console.log(req.query);
+    res.render("createMap", req.query);
 
 // GET route to the User Id
 router.get("/:id", (req, res) => {

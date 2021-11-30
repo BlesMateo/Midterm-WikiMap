@@ -45,6 +45,7 @@ const authRoutes = require("./routes/auth");
 const widgetsRoutes = require("./routes/widgets");
 const { response } = require("express");
 const mapDisplayRoutes = require("./routes/mapDisplayTest");
+const mapTesting = require("./routes/testing");
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
@@ -52,6 +53,8 @@ app.use("/api/users", usersRoutes(db));
 app.use("/api/auth", authRoutes(db));
 app.use("/api/widgets", widgetsRoutes(db));
 app.use("/", mapDisplayRoutes(db));
+app.use("/", mapTesting(db));
+app.use("/", usersRoutes(db));
 // Note: mount other resources here, using the same pattern above
 
 // Home page
