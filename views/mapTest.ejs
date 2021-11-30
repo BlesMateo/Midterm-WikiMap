@@ -110,34 +110,33 @@ function initMap() {
     currentInfoWindow = infoWindow;
     /* TODO: Step 4A3: Add a generic sidebar */
     infoPane = document.getElementById('panel');
+    map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 15
+    });
 
-    geocoder =  new google.maps.Geocoder();
-    const urlSearchParams = new URLSearchParams(window.location.search);
-    const params = Object.fromEntries(urlSearchParams.entries());
+    infoWindow.open(map);
+
+    geoFunc("", "tokyo");
+}
+
+function geoFunc(keyword, location) {
+  geocoder =  new google.maps.Geocoder();
+    // const urlSearchParams = new URLSearchParams(window.location.search);
+    // const params = Object.fromEntries(urlSearchParams.entries());
     // console.log(params);
     geocoder
-    .geocode({ 'address': params.location })
-    .then((result) => {
-      const { results } = result;
-      console.log(result);
-
+      .geocode({ 'address': location })
+      .then((result) => {
+        const { results } = result;
         pos = results[0].geometry.location
-        map = new google.maps.Map(document.getElementById('map'), {
-        center: pos,
-        zoom: 15
-        });
-        bounds.extend(pos);
-
         infoWindow.setPosition(pos);
         infoWindow.setContent('Location found.');
-        infoWindow.open(map);
         map.setCenter(pos);
 
         /* TODO: Step 3B2, Call the Places Nearby Search */
         // Call Places Nearby Search on user's location
-        getNearbyPlaces(pos, params.keyword);
-    })
-
+        getNearbyPlaces(pos, keyword);
+      })
 }
 
 //Search Form Submit event
@@ -149,7 +148,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     event.preventDefault();
     let test = $('#keywordInput').val();
     let poop = $('#locationInput').val();
-    window.location.href=`http://localhost:8080/map?keyword=${test}&location=${poop}`
+    geoFunc(test, poop);
   })
   console.log('DOM fully loaded and parsed');
 });
@@ -161,7 +160,7 @@ function getNearbyPlaces(position, keyword) {
     let request = {
         location: position,
         rankBy: google.maps.places.RankBy.DISTANCE,
-        keyword: keyword
+        keyword: keyword || '',
     };
     console.log(request.keyword);
 
