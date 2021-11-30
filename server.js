@@ -44,12 +44,14 @@ const usersRoutes = require("./routes/users");
 const authRoutes = require("./routes/auth");
 const widgetsRoutes = require("./routes/widgets");
 const { response } = require("express");
+const mapDisplayRoutes = require("./routes/mapDisplayTest");
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
 app.use("/api/users", usersRoutes(db));
 app.use("/api/auth", authRoutes(db));
 app.use("/api/widgets", widgetsRoutes(db));
+app.use("/", mapDisplayRoutes(db));
 // Note: mount other resources here, using the same pattern above
 
 // Home page
@@ -117,12 +119,6 @@ app.get("/register", (req, res) => {
 app.post("/logout", (require, response) => {
   require.session = null;
   response.redirect("index");
-});
-
-app.get("/map", (req, res) => {
-  console.log(req.query);
-  res.render("mapTest", req.query);
-
 });
 
 app.listen(PORT, () => {

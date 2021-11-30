@@ -36,6 +36,20 @@ module.exports = (db) => {
           .status(500)
           .json({ error: err.message });
       });
+  //creating new map
+  router.post('/newMap', (req, res) => {
+    const newMap = req.body;
+    user.password = bcrypt.hashSync(user.password, 12);
+    database.addUser(user)
+    .then(user => {
+      if (!user) {
+        res.send({error: "error"});
+        return;
+      }
+      req.session.userId = user.id;
+      res.send("🤗");
+    })
+    .catch(e => res.send(e));
   });
 
 
@@ -80,10 +94,9 @@ router.post("/:id/favourites", (req, res) => {
 });
 
   return router;
-};
+});
 
 // addFavouriteMap(3, 3)
 //   .then(result => {
 //     console.log(">>>>>>>>>>>>>>>>", result)
 //   })
-

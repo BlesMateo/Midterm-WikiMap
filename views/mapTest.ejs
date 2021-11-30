@@ -3,6 +3,7 @@
 
 <head>
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
+  <script src="routes/mapDisplayTest.js"></script>
 
   <title>Map Test: Sushi</title>
   <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
@@ -130,7 +131,7 @@ function geoFunc(keyword, location) {
         const { results } = result;
         pos = results[0].geometry.location
         infoWindow.setPosition(pos);
-        infoWindow.setContent('Location found.');
+        infoWindow.setContent('Searching near here.');
         map.setCenter(pos);
 
         /* TODO: Step 3B2, Call the Places Nearby Search */
@@ -276,6 +277,8 @@ if (placeResult.photos != null) {
     websitePara.appendChild(websiteLink);
     infoPane.appendChild(websitePara);
     }
+    document.getElementById('panel').innerHTML +=
+    '<button id="addMarker" class="btn btn-outline-primary" type="submit">Add to Map</button>'
 
     // Open the infoPane
     infoPane.classList.add("open");
@@ -286,7 +289,6 @@ if (placeResult.photos != null) {
 <!-- TODO: Step 3A, Load the Places Library -->
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyClwBEZi_qKRMndsCwxQ-Ewl7rfUinQFcQ&libraries=places&callback=initMap">
 </script>
-<script src="routes/apiSearch.js"></script>
 </body>
 
 </html>
