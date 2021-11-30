@@ -7,7 +7,8 @@
 
 const express = require('express');
 const router  = express.Router();
-const { addFavouriteMap, getFavouriteMaps} = require('../db/queries/users-queries');
+const { addFavouriteMap, getFavouriteMaps} = require('../lib/userQueries');
+
 
 module.exports = (db) => {
 
@@ -37,14 +38,12 @@ module.exports = (db) => {
       });
   });
 
-  return router;
 
-};
 
-//GET route to the User Id
+// GET route to the User Id
 router.get("/:id", (req, res) => {
-  const userId = req.params,id;
-  getFavouriteMaps(userId)
+  const userId = req.params.id;
+  getFavouriteMaps(userId, db)
   .then(maps => res.json(maps))
   .catch(err => {
     res
@@ -57,7 +56,7 @@ router.get("/:id", (req, res) => {
 
 router.get(":/id/favourites", (req, res) => {
   const userId = req.params.id;
-  getFavouriteMaps(userId)
+  getFavouriteMaps(userId, db)
     .then(maps => res.json(maps))
     .catch(err => {
       res
@@ -69,9 +68,9 @@ router.get(":/id/favourites", (req, res) => {
 router.post("/:id/favourites", (req, res) => {
   const userId = req.params.id;
   const mapId = req.body.mapId
-  addFavouriteMap(userId, mapId)
+  addFavouriteMap(userId, mapId, db)
     .then(() => {
-      return getFavouriteMaps(userId);
+      return getFavouriteMaps(userId, db);
     })
     .then(result => res.json(result))
     .catch(err => {
@@ -79,3 +78,12 @@ router.post("/:id/favourites", (req, res) => {
         .json({error: err.message});
     });
 });
+
+  return router;
+};
+
+// addFavouriteMap(3, 3)
+//   .then(result => {
+//     console.log(">>>>>>>>>>>>>>>>", result)
+//   })
+
