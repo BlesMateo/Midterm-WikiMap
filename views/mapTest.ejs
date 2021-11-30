@@ -2,6 +2,8 @@
 <html>
 
 <head>
+  <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
+
   <title>Map Test: Sushi</title>
   <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
   <meta charset="utf-8">
@@ -65,6 +67,17 @@ a {
 </head>
 
 <body>
+  <div id="searchBar">
+  <form id="searchForm">
+    <div class="form-group">
+      <input id="keywordInput" class="form-control" type="text" name="keyword" placeholder="search for..." style="width: 300px">
+    </div>
+    <div class="form-group">
+      <input id="locationInput" class="form-control" type="text" name="place" placeholder="location" style="width: 300px">
+    </div>
+    <button type="submit" class="btn btn-primary">Search Places</button>
+    </form>
+  </div>
   <!-- TODO: Step 4A2: Add a generic sidebar -->
 <!-- The slide-out panel for showing place details -->
 <div id="panel"></div>
@@ -88,21 +101,27 @@ let infoWindow;
 let currentInfoWindow;
 let service;
 let infoPane;
+let GeocoderResult;
+let geocoder;
 function initMap() {
     // Initialize variables
     bounds = new google.maps.LatLngBounds();
     infoWindow = new google.maps.InfoWindow;
     currentInfoWindow = infoWindow;
     /* TODO: Step 4A3: Add a generic sidebar */
-infoPane = document.getElementById('panel');
+    infoPane = document.getElementById('panel');
 
-    // Try HTML5 geolocation
-    if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(position => {
-        pos = {
-        lat: position.coords.latitude,
-        lng: position.coords.longitude
-        };
+    geocoder =  new google.maps.Geocoder();
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const params = Object.fromEntries(urlSearchParams.entries());
+    // console.log(params);
+    geocoder
+    .geocode({ 'address': params.location })
+    .then((result) => {
+      const { results } = result;
+      console.log(result);
+
+        pos = results[0].geometry.location
         map = new google.maps.Map(document.getElementById('map'), {
         center: pos,
         zoom: 15
@@ -115,48 +134,37 @@ infoPane = document.getElementById('panel');
         map.setCenter(pos);
 
         /* TODO: Step 3B2, Call the Places Nearby Search */
-// Call Places Nearby Search on user's location
-getNearbyPlaces(pos);
-    }, () => {
-        // Browser supports geolocation, but user has denied permission
-        handleLocationError(true, infoWindow);
-    });
-    } else {
-    // Browser doesn't support geolocation
-    handleLocationError(false, infoWindow);
-    }
+        // Call Places Nearby Search on user's location
+        getNearbyPlaces(pos, params.keyword);
+    })
+
 }
 
-// Handle a geolocation error
-function handleLocationError(browserHasGeolocation, infoWindow) {
-    // Set default location to Sydney, Australia
-    pos = {lat: -33.856, lng: 151.215};
-    map = new google.maps.Map(document.getElementById('map'), {
-    center: pos,
-    zoom: 15
-    });
+//Search Form Submit event
 
-    // Display an InfoWindow at the map center
-    infoWindow.setPosition(pos);
-    infoWindow.setContent(browserHasGeolocation ?
-    'Geolocation permissions denied. Using default location.' :
-    'Error: Your browser doesn\'t support geolocation.');
-    infoWindow.open(map);
-    currentInfoWindow = infoWindow;
+window.addEventListener('DOMContentLoaded', (event) => {
+  let p = $('#searchForm');
+  console.log(p);
+  p.on('submit', (event) => {
+    event.preventDefault();
+    let test = $('#keywordInput').val();
+    let poop = $('#locationInput').val();
+    window.location.href=`http://localhost:8080/map?keyword=${test}&location=${poop}`
+  })
+  console.log('DOM fully loaded and parsed');
+});
 
-    /* TODO: Step 3B3, Call the Places Nearby Search */
-// Call Places Nearby Search on the default location
-getNearbyPlaces(pos);
-}
 /* END TODO: Step 2, Geolocate your user */
 /* TODO: Step 3B1, Call the Places Nearby Search */
 // Perform a Places Nearby Search Request
-function getNearbyPlaces(position) {
+function getNearbyPlaces(position, keyword) {
     let request = {
-    location: position,
-    rankBy: google.maps.places.RankBy.DISTANCE,
-    keyword: 'sushi'
+        location: position,
+        rankBy: google.maps.places.RankBy.DISTANCE,
+        keyword: keyword
     };
+    console.log(request.keyword);
+
 
     service = new google.maps.places.PlacesService(map);
     service.nearbySearch(request, nearbyCallback);
@@ -278,6 +286,7 @@ if (placeResult.photos != null) {
 <!-- TODO: Step 3A, Load the Places Library -->
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyClwBEZi_qKRMndsCwxQ-Ewl7rfUinQFcQ&libraries=places&callback=initMap">
 </script>
+<script src="routes/apiSearch.js"></script>
 </body>
 
 </html>

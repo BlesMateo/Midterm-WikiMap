@@ -53,7 +53,9 @@ app.get("/", (req, res) => {
 });
 
 app.get("/map", (req, res) => {
-  res.render("mapTest");
+  console.log(req.query);
+  res.render("mapTest", req.query);
+
 });
 
 app.listen(PORT, () => {
