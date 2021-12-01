@@ -44,7 +44,6 @@ module.exports = (db) => {
   // });
 
   router.get("/new", (req, res) => {
-    console.log(req.query);
     res.render("createMap", req.query);
 
 // GET route to the User Id
@@ -85,6 +84,29 @@ router.post("/:id/favourites", (req, res) => {
         .json({error: err.message});
     });
 });
+
+    router.post("/new", (req, res) => {
+      return result = db
+      .query(`INSERT INTO maps (title, description, location)
+      VALUES ($1, $2, $3)
+      RETURNING * ;`, [req.body.title, req.body.description, req.body.city])
+      .then(result => {
+        if (result.rows[0]) {
+          console.log(result);
+          let id = result.rows[0].id
+          res.redirect(`/new/${id}`);
+          return result.rows[0];
+        } else {
+          return null;
+        }
+      })
+      .catch(error => console.log(error.message));
+    })
+
+
+
+
+
 
   return router;
 });
