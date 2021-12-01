@@ -71,10 +71,7 @@ app.use("/", newMapRoutes(db));
 //   response.redirect('/');
 // })
 
-app.get("/login", (req, res) => {
-  const uLogin = req.session.user;
-  res.render("login", {uLogin});
-});
+
 
 app.post('/login', (req, res) => {
   const userEmail = req.body.email;

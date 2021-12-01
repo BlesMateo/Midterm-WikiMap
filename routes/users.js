@@ -25,6 +25,19 @@ module.exports = (db) => {
       });
   });
 
+  //Login Route
+  router.get("/login", (req, res) => {
+    const uLogin = req.session.user;
+    console.log(uLogin);
+    res.render("login", {uLogin});
+  });
+
+  //Register route
+  router.get("/register", (req, res) => {
+    // getUserByEmail("vega@gmail.com", db);
+    const uLogin = req.session.user;
+    res.render("register", {uLogin});
+  });
 
   router.get("/profile", (req, res) => {
     db.query(`SELECT * FROM users;`)
@@ -40,6 +53,7 @@ module.exports = (db) => {
 
     })
 
+//Get route to the new page creation
 router.get("/new", (req, res) => {
   console.log(req.query);
   res.render("createMap", req.query);
@@ -60,7 +74,7 @@ router.get("/:id", (req, res) => {
 
 //GET Route to user's favourites
 
-router.get(":/id/favourites", (req, res) => {
+router.get("/:id/favourites", (req, res) => {
   const userId = req.params.id;
   getFavouriteMaps(userId, db)
     .then(maps => res.json(maps))
@@ -106,10 +120,4 @@ router.post("/new", (req, res) => {
 
   return router;
 
-
-// addFavouriteMap(3, 3)
-//   .then(result => {
-//     console.log(">>>>>>>>>>>>>>>>", result)
-//   })
-
-}
+};
