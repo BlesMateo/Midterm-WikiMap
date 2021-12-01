@@ -52,3 +52,4 @@ function geoFunc(keyword, location) {
         getNearbyPlaces(pos, keyword);
       })
 }
+

@@ -43,10 +43,10 @@ app.use(express.static("public"));
 const usersRoutes = require("./routes/users");
 const authRoutes = require("./routes/auth");
 const widgetsRoutes = require("./routes/widgets");
-// const { response } = require("express");
+const { response } = require("express");
 const mapDisplayRoutes = require("./routes/mapDisplayTest");
-const newMapRoutes = require("./routes/newMap");
 const mapTesting = require("./routes/testing");
+const newMapRoutes = require("./routes/newMap");
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
@@ -57,7 +57,6 @@ app.use("/", mapDisplayRoutes(db));
 app.use("/", mapTesting(db));
 app.use("/", usersRoutes(db));
 app.use("/", newMapRoutes(db));
-
 // Note: mount other resources here, using the same pattern above
 
 // Home page
@@ -130,3 +129,4 @@ app.post("/logout", (require, response) => {
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
+

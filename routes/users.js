@@ -25,6 +25,7 @@ module.exports = (db) => {
       });
   });
 
+
   router.get("/profile", (req, res) => {
     db.query(`SELECT * FROM users;`)
       .then(data => {
@@ -36,15 +37,14 @@ module.exports = (db) => {
           .status(500)
           .json({ error: err.message });
       });
-  //creating new map
-  // router.post('/new', (req, res) => {
-  //     console.log(req.query);
-  //     res.render("createMap", req.query);
 
-  // });
+    })
 
-  router.get("/new", (req, res) => {
-    res.render("createMap", req.query);
+router.get("/new", (req, res) => {
+  console.log(req.query);
+  res.render("createMap", req.query);
+})
+
 
 // GET route to the User Id
 router.get("/:id", (req, res) => {
@@ -85,34 +85,31 @@ router.post("/:id/favourites", (req, res) => {
     });
 });
 
-    router.post("/new", (req, res) => {
-      return result = db
-      .query(`INSERT INTO maps (title, description, location)
-      VALUES ($1, $2, $3)
-      RETURNING * ;`, [req.body.title, req.body.description, req.body.city])
-      .then(result => {
-        if (result.rows[0]) {
-          console.log(result);
-          let id = result.rows[0].id
-          res.redirect(`/new/${id}`);
-          return result.rows[0];
-        } else {
-          return null;
-        }
-      })
-      .catch(error => console.log(error.message));
-    })
-
-
-
-
+router.post("/new", (req, res) => {
+  return result = db
+  .query(`INSERT INTO maps (title, description, location)
+  VALUES ($1, $2, $3)
+  RETURNING * ;`, [req.body.title, req.body.description, req.body.city])
+  .then(result => {
+    if (result.rows[0]) {
+      console.log(result);
+      let id = result.rows[0].id
+      res.redirect(`/new/${id}`);
+      return result.rows[0];
+    } else {
+      return null;
+    }
+  })
+  .catch(error => console.log(error.message));
+})
 
 
   return router;
-});
-})};
+
 
 // addFavouriteMap(3, 3)
 //   .then(result => {
 //     console.log(">>>>>>>>>>>>>>>>", result)
 //   })
+
+}
