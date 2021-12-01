@@ -52,12 +52,47 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 
-app.get("/map", (req, res) => {
+app.get("/maps", (req, res) => {
   console.log(req.query);
   res.render("mapTest", req.query);
 
 });
 
+// Need to complete data base tables before moving forward
+// Hardcoded user #1 in our database to test outcome of this map route.
+// app.get("/maps", (req, res) => {
+//   db.query("SELECT * FROM map WHERE user_id = 1")
+//     .then(function (results) {
+//       res.json(results.rows);
+
+//     });
+// });
+
+//Endpoint - Create map for user
+app.post("/map/new", (req, res) => {
+  const { userId, title, description } = req.body
+  return db
+    .query(`INSERT INTO maps (user_id, title, description) VALUES ($1, $2, $3)`, [userId, title, description])
+
+});
+// Endpoint - Create a marker
+app.post("/map/location_marker", (req, res) => {
+  const { long, lat, place_id } = req.body
+  return db
+    .query(`INSERT INTO location_marker (title, map_id, long, lat, place_id)
+    VALUES ($1, $2, $3, $4, $5);`, ["Test", 5, long, lat, place_id])
+
+});
+
+//Throw this function into another file into lib
+const addToMaps = function (userId, title, description) {
+  return db
+    .query(`INSERT INTO maps(user_id, title, description) VALUES($1, $2, $3)
+  RETURNING *; `, [userId, title, description])
+    .then(res => res.rows);
+}
+
+
 app.listen(PORT, () => {
-  console.log(`Example app listening on port ${PORT}`);
+  console.log(`Example app listening on port ${PORT} `);
 });
