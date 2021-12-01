@@ -119,6 +119,12 @@ app.post("/logout", (require, response) => {
   response.redirect("index");
 });
 
+app.get("/map", (req, res) => {
+  console.log(req.query);
+  res.render("mapTest", req.query);
+
+});
+
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
