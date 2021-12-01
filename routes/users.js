@@ -110,6 +110,7 @@ router.post("/:id/favourites", (req, res) => {
 
   return router;
 });
+})};
 
 // addFavouriteMap(3, 3)
 //   .then(result => {
