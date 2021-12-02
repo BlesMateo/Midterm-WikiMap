@@ -134,7 +134,7 @@
 
         infoWindow.open(map);
 
-        geoFunc("", document.getElementById('locationcenter').innerText);
+        geoFunc("", document.getElementById("locationcenter").innerText);
       }
 
       function geoFunc(keyword, location) {
@@ -227,7 +227,10 @@
               showDetails(placeResult, marker, status);
               $.ajax({
                 type: "GET",
-                url: "/map/" + document.getElementById('mapIdentity').innerText + "/marker",
+                url:
+                  "/newmarker/map/" +
+                  document.getElementById("mapIdentity").innerText +
+                  "/marker",
                 data: {
                   lng: selectedPlace.geometry.location.lng,
                   lat: selectedPlace.geometry.location.lat,
@@ -326,7 +329,9 @@
         let map1 = document.createElement("button");
         map1.addEventListener("click", function (event, mapId) {
           $.post(
-            "/map/"+ document.getElementById('mapIdentity').innerText +"/marker",
+            "/newmarker/map/" +
+              document.getElementById("mapIdentity").innerText +
+              "/marker",
             {
               title: selectedPlace.name,
               lng: selectedPlace.geometry.location.lng,
@@ -334,7 +339,7 @@
               place_id: selectedPlace.place_id,
             },
             function (data, status) {
-              selectedPlace.marker_id = data
+              selectedPlace.marker_id = data;
               alert("Data: " + data + "\nStatus: " + status);
             }
           );
@@ -350,7 +355,7 @@
           console.log(selectedPlace.marker_id);
           $.post(
             //need to account for user
-            `/map/delete/${selectedPlace.marker_id}`,
+            `/deletemarker/map/delete/${selectedPlace.marker_id}`,
             function (data, status) {
               alert("Data: " + data + "\nStatus: " + status);
             }

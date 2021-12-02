@@ -6,7 +6,7 @@
  */
 
 const express = require('express');
-const router  = express.Router();
+const router = express.Router();
 
 module.exports = (db) => {
 
@@ -32,48 +32,48 @@ module.exports = (db) => {
     console.log("==========", req.body)
     // return res.render("profile",{ user: req.body });
     getUserByEmail(email, db)
-    .then (result => {
-      console.log("+++++++++". result)
-      if (result) {
-        return res.status(403).send({ status: "error", message: "You already have an account please login" })
-      }
+      .then(result => {
+        console.log("+++++++++".result)
+        if (result) {
+          return res.status(403).send({ status: "error", message: "You already have an account please login" })
+        }
 
-      db.query(`INSERT into users (email, password, name, description)
+        db.query(`INSERT into users (email, password, name, description)
       VALUES ($1, $2, $3, $4) RETURNING *`, [email, password, username, 1])
-      .then(data => {
-        const user = data.rows[0];
-        req.session.user_id = user.id
-        return res.render("profile",{ user });
+          .then(data => {
+            const user = data.rows[0];
+            req.session.user_id = user.id
+            res.redirect("/profile");
+          })
+          .catch(err => {
+            console.log(err.message)
+            res
+              .status(500)
+              .json({ error: err.message });
+          });
       })
-      .catch(err => {
-        console.log(err.message)
-        res
-          .status(500)
-          .json({ error: err.message });
-      });
-    })
 
   });
 
   router.post("/login", (req, res) => {
     const { email, password } = req.body
-    console.log("==========", req.body)
+    // console.log("==========", req.body)
     // return res.render("profile",{ user: req.body });
     getUserByEmail(email, db)
-    .then (user => {
-      console.log("+++++++++". result)
-      if (!user) {
-        return res.status(403).send({ status: "error", message: "You dont have an account please register" })
-      }
+      .then(user => {
+        // console.log("+++++++++".result)
+        if (!user) {
+          return res.status(403).send({ status: "error", message: "You dont have an account please register" })
+        }
 
-      if (user.password !== password) {
-        return res.status(403).send({ status: "error", message: "Invalid login" })
-      }
+        if (user.password !== password) {
+          return res.status(403).send({ status: "error", message: "Invalid login" })
+        }
 
-      req.session.user_id = user.id
-      return res.render("profile",{ user });
+        req.session.user_id = user.id
+        return res.redirect("/profile");
 
-    })
+      })
 
   });
 
@@ -97,18 +97,18 @@ module.exports = (db) => {
   return router;
 };
 
-const getUserByEmail = function(email, db) {
-  console.log("__email", email)
+const getUserByEmail = function (email, db) {
+  // console.log("__email", email)
   return db.query(`SELECT * FROM users WHERE email = $1;`, [email])
-  .then(data => {
-    const user = data.rows[0];
-    console.log("%%%%%%%%%%%", user)
-    return user
-  })
-  .catch(err => {
-    console.log(err.message)
-    return err.message
-  });
+    .then(data => {
+      const user = data.rows[0];
+      // console.log("%%%%%%%%%%%", user)
+      return user
+    })
+    .catch(err => {
+      console.log(err.message)
+      return err.message
+    });
 }
 
 

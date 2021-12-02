@@ -1,7 +1,3 @@
-// load .env data into process.env
-require("dotenv").config();
-
-// Web server config
 const PORT = process.env.PORT || 8080;
 const sassMiddleware = require("./lib/sass-middleware");
 const express = require("express");
@@ -44,32 +40,37 @@ const usersRoutes = require("./routes/users");
 const authRoutes = require("./routes/auth");
 const widgetsRoutes = require("./routes/widgets");
 // const { response } = require("express");
-const mapDisplayRoutes = require("./routes/mapDisplayTest");
-const newMapRoutes = require("./routes/newMap");
+const mapDisplayRoutes = require("./routes/maps");
+// const newMapRoutes = require("./routes/newMap");
 const mapTesting = require("./routes/testing");
 const newMarkerRoute = require("./routes/marker");
 const deleteMarkerRoutes = require("./routes/deleteMarker");
-const mapList = require("./routes/mapListQuery")
+// const mapList = require("./routes/mapListQuery")
+const waterProfile = require("./routes/newProfile")
+
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
-app.use("/api/users", usersRoutes(db));
+// app.use("/api/users", usersRoutes(db));
 app.use("/api/auth", authRoutes(db));
 app.use("/api/widgets", widgetsRoutes(db));
 app.use("/map", mapDisplayRoutes(db));
 app.use("/maptesting", mapTesting(db));
-app.use("/users", usersRoutes(db));
-app.use("/newmap", newMapRoutes(db));
+app.use("/", usersRoutes(db));
+// app.use("/newmap", newMapRoutes(db));
 app.use("/newmarker", newMarkerRoute(db));
 app.use("/deletemarker", deleteMarkerRoutes(db));
-app.use("/maplist", mapList(db));
+// app.use("/maplist", mapList(db));
+app.use("/profile", waterProfile(db));
+
+//note review the structure of all the string with all app.uses
 
 // Note: mount other resources here, using the same pattern above
 
 // Home page
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
-2
+
 
 // app.get('/login', (require, response) => { // to be determined page layout (redirect?)
 //   require.session.user = require.query.user;
@@ -84,11 +85,11 @@ app.post('/login', (req, res) => {
   const userPass = req.body.password;
   console.log("=======", req.body);
 
-  if(userEmail === " " && userPass === undefined) {
+  if (userEmail === " " && userPass === undefined) {
     res.status(403).send("Please enter your email");
     return;
   }
-  if(userEmail === undefined && userPass === " ") {
+  if (userEmail === undefined && userPass === " ") {
     res.status(403).send("Please enter your password");
     return;
   }
@@ -101,7 +102,7 @@ app.post('/login', (req, res) => {
       return;
     })
     .catch(err => {
-      response.status(500).json({error: err.message});
+      response.status(500).json({ error: err.message });
     });
 
 });
@@ -109,7 +110,7 @@ app.post('/login', (req, res) => {
 app.get("/register", (req, res) => {
   // getUserByEmail("vega@gmail.com", db);
   const uLogin = req.session.user;
-  res.render("register", {uLogin});
+  res.render("register", { uLogin });
 });
 
 // app.post ("/register", (require, response) => {
@@ -135,6 +136,14 @@ app.get("/maps", (req, res) => {
   res.render("mapTest", req.query);
 
 });
+
+// app.get("/contribution", (req, res) => {
+
+// })
+
+// app.get("/favorite", (req, res) => {
+
+// })
 
 // Need to complete data base tables before moving forward
 // Hardcoded user #1 in our database to test outcome of this map route.
