@@ -2,8 +2,12 @@
 <html>
   <head>
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
+    <script src="routes/mapDisplayTest.js"></script>
 
     <title>Map Test: Sushi</title>
+    <h2 class="mapName">Editing: <%= title %></h2>
+    <p id="mapIdentity"><%= mapId %></p>
+    <p id="locationcenter"><%= mapLocation %></p>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
     <meta charset="utf-8" />
     <style>
@@ -108,10 +112,10 @@
        * Replace the code from here to the END TODO comment with this code
        * from codelab instructions. */
       let pos;
-      let selectedPlace;
       let map;
       let bounds;
       let infoWindow;
+      let selectedPlace;
       let currentInfoWindow;
       let service;
       let infoPane;
@@ -130,23 +134,8 @@
 
         infoWindow.open(map);
 
-        geoFunc("", "tokyo");
-
-        // adds marker per click on map - dont need
-        // map.addListener('click', (event) => {
-        //   placeMarkerAndPanTo(event.latLng, map);
-
-        // });
+        geoFunc("", document.getElementById('locationcenter').innerText);
       }
-
-      // function placeMarkerAndPanTo(latLng, map) {
-      //   new google.maps.Marker({
-      //     position: latLng,
-      //     map: map,
-      //   });
-      //   map.panTo(latLng);
-
-      // }
 
       function geoFunc(keyword, location) {
         geocoder = new google.maps.Geocoder();
@@ -157,7 +146,7 @@
           const { results } = result;
           pos = results[0].geometry.location;
           infoWindow.setPosition(pos);
-          infoWindow.setContent("Location found.");
+          infoWindow.setContent("Searching near here.");
           map.setCenter(pos);
 
           /* TODO: Step 3B2, Call the Places Nearby Search */
@@ -236,6 +225,20 @@
              * the search response, we will hit API rate limits. */
             service.getDetails(request, (placeResult, status) => {
               showDetails(placeResult, marker, status);
+              $.ajax({
+                type: "GET",
+                url: "/map/" + document.getElementById('mapIdentity').innerText + "/marker",
+                data: {
+                  lng: selectedPlace.geometry.location.lng,
+                  lat: selectedPlace.geometry.location.lat,
+                  place_id: selectedPlace.place_id,
+                },
+                success: function (data) {
+                  console.log("----", data);
+                  /// adjust to account for user id/login both marker/user
+                  selectedPlace.marker_id = data[0]["id"];
+                },
+              });
             });
           });
 
@@ -258,9 +261,7 @@
               "</strong><br>" +
               "Rating: " +
               placeResult.rating +
-              "<p>" +
-              "Add to Map" +
-              "</p></div>"
+              "</div>"
           );
           placeInfowindow.open(marker.map, marker);
           currentInfoWindow.close();
@@ -320,20 +321,44 @@
           infoPane.appendChild(websitePara);
         }
 
-        //call back end for all maps, loop through all maps and put in the box
-        //ajax
-        // $.get("/maps", function (data) {
-        //   console.log(data);
-        // });
-        let map1 = document.createElement("a");
-        map1.addEventListener("click", function (event) {
+        //code for button click
+
+        let map1 = document.createElement("button");
+        map1.addEventListener("click", function (event, mapId) {
+          $.post(
+            "/map/"+ document.getElementById('mapIdentity').innerText +"/marker",
+            {
+              title: selectedPlace.name,
+              lng: selectedPlace.geometry.location.lng,
+              lat: selectedPlace.geometry.location.lat,
+              place_id: selectedPlace.place_id,
+            },
+            function (data, status) {
+              selectedPlace.marker_id = data
+              alert("Data: " + data + "\nStatus: " + status);
+            }
+          );
+        });
+        map1.textContent = "Add to Map";
+        infoPane.appendChild(map1);
+
+        //Delete Marker
+        let deletemarker = document.createElement("button");
+        deletemarker.addEventListener("click", function (event) {
           // console.log(selectedPlace);
-          console.log("----------------;", req.body.title);
+          console.log("click is being ran event");
+          console.log(selectedPlace.marker_id);
+          $.post(
+            //need to account for user
+            `/map/delete/${selectedPlace.marker_id}`,
+            function (data, status) {
+              alert("Data: " + data + "\nStatus: " + status);
+            }
+          );
         });
 
-        map1.textContent = "Add to Map #1";
-        // map1.href = "/add_to_map/" + 1;
-        infoPane.appendChild(map1);
+        deletemarker.textContent = "Delete marker from map";
+        infoPane.appendChild(deletemarker);
 
         // Open the infoPane
         infoPane.classList.add("open");
@@ -347,6 +372,5 @@
       defer
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyClwBEZi_qKRMndsCwxQ-Ewl7rfUinQFcQ&libraries=places&callback=initMap"
     ></script>
-    <script src="routes/apiSearch.js"></script>
   </body>
 </html>
