@@ -57,3 +57,6 @@ function geoFunc(keyword, location) {
       })
 }
 
+let newMap = document.getElementById('/new/map_id')
+
+

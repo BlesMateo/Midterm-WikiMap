@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>MaPPi</title>
+  <%- include('partials/_head') %>
+</head>
+<%- include('partials/_header') %>
+
+<div class="form-popup" id="edit-map-popup">
+  <form method="POST" action="/api/maps/:id" class="map-form">
+    <div class="form-header">
+      <label for="map-form" class="side-panel-heading">Edit Map</label>
+      <i class="fas fa-pen"></i>"></i>
+    </div>
+    <div class="form-input">
+      <input type="text" class="input-map-title" name="title" placeholder="Map Title" required>
+      <textarea type="text" class="input-map-description" name="description"
+        placeholder="New map description..."></textarea>
+    </div>
+    <button type="submit" class="button-text">Edit</button>
+  </form>
+</div>
+

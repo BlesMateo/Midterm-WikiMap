@@ -1,3 +1,5 @@
+//On map list page, each map should link to their respective map page (/new/map_id)
+
 const { json } = require('express');
 const express = require('express');
 const router  = express.Router();
@@ -24,3 +26,4 @@ console.log("==============", result.rows)
 
   return router;
 }
+

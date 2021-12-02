@@ -19,6 +19,54 @@
   <h3>Profile</h3>
 
 </main>
-
-
+<div class="card">
+  <div class="card-header" role="tab" id="headingTwo">
+    <a class="collapsed" data-toggle="collapse" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+      <h5 class="mb-0">Maps Contributed:</h5>
+      <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
+      <script src="/routes/mapListQuery.js"></script>
+    </a>
+  </div>
+  <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
+    <div class="card-body">
+     <div class="d-flex justify-content-center">
+          <ul id="contribution-list" class="list-group">
+            <% for(var a = 0; a < contributions.length; a = a + 1) {%>
+              <li class="list-group-item">
+                <a href="/maps/<%= contributions[i].map_id %>">
+                  <p class="title"><%= contributions[i].name %></p>
+                  <p class="description">
+                    <%= contributions[i].description%>
+                  </div>
+   <div id="custom-point-feed class=" map-body">
+      <ul class="body">
+        <% if (user) { %>
+         <span class="button">
+          <a id="arrow-back-button" class="button-text" href=#>← Back to Map List</a>
+           </span>
+          <% } %>
+           <div id="map-info-container"></div>
+            </ul>
+            <% if (user) { %>
+            <div>
+            <span class="selector-bar">
+            <a class="edit-map-cta" href=#>✏️ Edit a Map</a>
+                        <div class="pen" href="/:id/edit-map-cta"></div>
+                        <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
+                        <script src="/lib/mapQueries.js"></script>
+                        <% if(!user){ %>
+                          <div class="navbar-nav">
+                            <a class="nav-item nav-link" href="/register">Register</a>
+                            <a class="nav-item nav-link" href="/login">Login</a>
+                          </div>
+                          <% } else { %>
+                          <div class="navbar-nav">
+                            <h6 class="username">Logged in as: <%= user.username %></h6>
+                            <form action="/logout" method="POST">
+                              <button type="submit" class="btn btn-outline-light">Logout</button>
+                            </form>
+                            <% } %>
+                          </div>
 </html>
+
+
