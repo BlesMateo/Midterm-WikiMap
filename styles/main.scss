@@ -1,6 +1,8 @@
+$primary-color: #5b5568;
+
 body {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
   min-height: 100vh;
 
@@ -15,3 +17,20 @@ body {
     rgba(163, 208, 219, 1) 100%
   );
 }
+
+nav {
+  background-color: transparent;
+  color: $primary-color;
+  height: 80px;
+  display:flex;
+  align-items: center;
+  position: fixed;
+  z-index: 2;
+  width: 100%;
+  top: 0px;
+  margin: 0px;
+}
+.navbar-custom {
+  background-color: $primary-color;
+}
+
