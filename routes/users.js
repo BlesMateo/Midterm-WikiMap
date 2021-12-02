@@ -99,6 +99,7 @@ router.post("/:id/favourites", (req, res) => {
     });
 });
 
+//Creates a new map post request -- adds to database
 router.post("/new", (req, res) => {
   return result = db
   .query(`INSERT INTO maps (title, description, location)

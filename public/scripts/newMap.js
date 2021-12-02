@@ -14,19 +14,23 @@ function initMap() {
     infoWindow.open(map);
 
     geoFunc("", document.getElementById('location').innerText);
+    const rows = document.getElementById('markers').innerHTML;
+    const markers = JSON.parse(rows);
+    console.log(markers);
 
 //Markers -- needs to be updated to grab markers
 var infowindow =  new google.maps.InfoWindow({});
 var marker, count;
-for (count = 0; count < locations.length; count++) {
+for (count = 0; count < markers.length; count++) {
+
     marker = new google.maps.Marker({
-      position: new google.maps.LatLng(locations[count][1], locations[count][2]),
+      position: new google.maps.LatLng(markers[count].lat, markers[count].lng),
       map: map,
-      title: locations[count][0]
+      title: markers[count].name
     });
 google.maps.event.addListener(marker, 'click', (function (marker, count) {
       return function () {
-        infowindow.setContent(locations[count][0]);
+        infowindow.setContent(name);
         infowindow.open(map, marker);
       }
     })(marker, count));
