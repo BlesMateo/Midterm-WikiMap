@@ -1,6 +1,8 @@
-// const { json } = require('express');
-// const express = require('express');
-// const router = express.Router();
+//On map list page, each map should link to their respective map page (/new/map_id)
+
+const { json } = require('express');
+const express = require('express');
+const router  = express.Router();
 
 // module.exports = (db) => {
 //   router.get("/map/list", (req, res) => {
@@ -22,5 +24,6 @@
 //       .catch(error => console.log(error.message));
 //   });
 
-//   return router;
-// }
+  return router;
+
+

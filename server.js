@@ -1,7 +1,3 @@
-// load .env data into process.env
-require("dotenv").config();
-
-// Web server config
 const PORT = process.env.PORT || 8080;
 const sassMiddleware = require("./lib/sass-middleware");
 const express = require("express");
