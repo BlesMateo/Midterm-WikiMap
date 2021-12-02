@@ -4,7 +4,7 @@ const express = require('express');
 const router  = express.Router();
 
 module.exports = (db) => {
-  router.get("/map/edit/:mapId", (req, res) => {
+  router.get("/edit/:mapId", (req, res) => {
     return db
     .query(`SELECT title, location FROM maps
     WHERE maps.id = $1`, [req.params.mapId])

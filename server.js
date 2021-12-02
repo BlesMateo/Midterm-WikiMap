@@ -56,13 +56,13 @@ const mapList = require("./routes/mapListQuery")
 app.use("/api/users", usersRoutes(db));
 app.use("/api/auth", authRoutes(db));
 app.use("/api/widgets", widgetsRoutes(db));
-app.use("/", mapDisplayRoutes(db));
-app.use("/", mapTesting(db));
-app.use("/", usersRoutes(db));
-app.use("/", newMapRoutes(db));
-app.use("/", newMarkerRoute(db));
-app.use("/", deleteMarkerRoutes(db));
-app.use("/", mapList(db));
+app.use("/map", mapDisplayRoutes(db));
+app.use("/maptesting", mapTesting(db));
+app.use("/users", usersRoutes(db));
+app.use("/newmap", newMapRoutes(db));
+app.use("/newmarker", newMarkerRoute(db));
+app.use("/deletemarker", deleteMarkerRoutes(db));
+app.use("/maplist", mapList(db));
 
 // Note: mount other resources here, using the same pattern above
 
