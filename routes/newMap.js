@@ -8,7 +8,7 @@ module.exports = (db) => {
     const templateVars =  { mapId: req.params.mapId }
     console.log('I am here')
     return db
-    .query(`SELECT maps.title, maps.description, location, marker.title as name, marker.description as marker_description, lng, lat, place_id
+    .query(`SELECT maps.title, maps.description, location, marker.title as name, marker.description as marker_description, lng, lat, place_id, user_id
     FROM maps
     LEFT OUTER JOIN marker ON maps.id = map_id
     WHERE maps.id = $1`, [req.params.mapId])

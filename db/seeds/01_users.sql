@@ -8,9 +8,9 @@ VALUES('Ham', 'jpan@gmail.com', 'hamcheese', 'description');
 INSERT INTO users (name, email, password, description)
 VALUES('Pepsi', 'pepsi@gmail.com', 'pepsiisbetterthancoke', 'description');
 
-INSERT INTO maps (title, description, location) VALUES ('This is a title', 'Description','tokyo');
-INSERT INTO maps (title, description, location) VALUES ('This is another title', 'Description','vancouver');
-INSERT INTO maps (title, description, location) VALUES ('This is a different title', 'Description','toronto');
+INSERT INTO maps (title, description, location, user_id) VALUES ('This is a title', 'Description','tokyo', 3);
+INSERT INTO maps (title, description, location, user_id) VALUES ('This is another title', 'Description','vancouver', 2);
+INSERT INTO maps (title, description, location, user_id) VALUES ('This is a different title', 'Description','toronto', 1);
 
 INSERT INTO marker (title, description, map_id, lng, lat, place_id) VALUES ('Yes Resto', 'Description', 3, -79.347015, 43.651070, 'placeholderID');
 INSERT INTO marker (title, description, map_id, lng, lat, place_id) VALUES ('No Resto', 'Description', 2, -79.347015, 43.651070, 'placeholderID');

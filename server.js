@@ -48,6 +48,8 @@ const mapDisplayRoutes = require("./routes/mapDisplayTest");
 const newMapRoutes = require("./routes/newMap");
 const mapTesting = require("./routes/testing");
 const newMarkerRoute = require("./routes/marker");
+const deleteMarkerRoutes = require("./routes/deleteMarker");
+const mapList = require("./routes/mapListQuery")
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
@@ -59,6 +61,8 @@ app.use("/", mapTesting(db));
 app.use("/", usersRoutes(db));
 app.use("/", newMapRoutes(db));
 app.use("/", newMarkerRoute(db));
+app.use("/", deleteMarkerRoutes(db));
+app.use("/", mapList(db));
 
 // Note: mount other resources here, using the same pattern above
 

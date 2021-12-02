@@ -7,6 +7,7 @@
     <title>Map Test: Sushi</title>
     <h2 class="mapName">Editing: <%= title %></h2>
     <p id="mapIdentity"><%= mapId %></p>
+    <p id="locationcenter"><%= mapLocation %></p>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
     <meta charset="utf-8" />
     <style>
@@ -133,7 +134,7 @@
 
         infoWindow.open(map);
 
-        geoFunc("", "tokyo");
+        geoFunc("", document.getElementById('locationcenter').innerText);
       }
 
       function geoFunc(keyword, location) {
@@ -203,6 +204,8 @@
           /* TODO: Step 4B: Add click listeners to the markers */
           // Add click listener to each marker
           google.maps.event.addListener(marker, "click", () => {
+            map.setZoom(16);
+            map.setCenter(marker.getPosition());
             let request = {
               placeId: place.place_id,
               fields: [
@@ -222,6 +225,20 @@
              * the search response, we will hit API rate limits. */
             service.getDetails(request, (placeResult, status) => {
               showDetails(placeResult, marker, status);
+              $.ajax({
+                type: "GET",
+                url: "/map/" + document.getElementById('mapIdentity').innerText + "/marker",
+                data: {
+                  lng: selectedPlace.geometry.location.lng,
+                  lat: selectedPlace.geometry.location.lat,
+                  place_id: selectedPlace.place_id,
+                },
+                success: function (data) {
+                  console.log("----", data);
+                  /// adjust to account for user id/login both marker/user
+                  selectedPlace.marker_id = data[0]["id"];
+                },
+              });
             });
           });
 
@@ -305,10 +322,8 @@
         }
 
         //code for button click
-        document.getElementById("panel").innerHTML +=
-          '<form method="POST" action="/map/marker"><button id="addMarker" class="btn btn-outline-primary" type="submit">Add to Map</button></form>';
 
-        let map1 = document.createElement("a");
+        let map1 = document.createElement("button");
         map1.addEventListener("click", function (event, mapId) {
           $.post(
             "/map/"+ document.getElementById('mapIdentity').innerText +"/marker",
@@ -319,12 +334,31 @@
               place_id: selectedPlace.place_id,
             },
             function (data, status) {
+              selectedPlace.marker_id = data
               alert("Data: " + data + "\nStatus: " + status);
             }
           );
         });
         map1.textContent = "Add to Map";
         infoPane.appendChild(map1);
+
+        //Delete Marker
+        let deletemarker = document.createElement("button");
+        deletemarker.addEventListener("click", function (event) {
+          // console.log(selectedPlace);
+          console.log("click is being ran event");
+          console.log(selectedPlace.marker_id);
+          $.post(
+            //need to account for user
+            `/map/delete/${selectedPlace.marker_id}`,
+            function (data, status) {
+              alert("Data: " + data + "\nStatus: " + status);
+            }
+          );
+        });
+
+        deletemarker.textContent = "Delete marker from map";
+        infoPane.appendChild(deletemarker);
 
         // Open the infoPane
         infoPane.classList.add("open");
