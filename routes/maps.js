@@ -26,10 +26,7 @@ RETURNING * ;`, [req.body.title, req.body.description, req.body.city, req.sessio
     const templateVars = { mapId: req.params.mapId }
     console.log('I am here')
     return db
-      .query(`SELECT maps.title, maps.description, location, marker.title as name, marker.description as marker_description, lng, lat, place_id, user_id
-  FROM maps
-  LEFT OUTER JOIN marker ON maps.id = map_id
-  WHERE maps.id = $1`, [req.params.mapId])
+      .query(`SELECT maps.title, maps.description, location, marker.title as name, marker.description as marker_description, lng, lat, place_id, user_id FROM maps LEFT OUTER JOIN marker ON maps.id = map_id WHERE maps.id = $1`, [req.params.mapId])
       .then(result => {
         console.log(result);
         if (result.rows[0]) {

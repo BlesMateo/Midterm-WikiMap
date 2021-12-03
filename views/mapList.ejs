@@ -1,15 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <script type="text/javascript" src="/routes/users.js"></script>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Map List</title>
   </head>
   <body>
-    <p>test <%= list0 %></p>
-    <p><%= list1 %></p>
+    <tbody>
+      <% for(let list of mapData) { %>
+        <tr>
+          <td><%= list.title %></td>
+          <td>
+         <a href="/map/new/<%=list.id %>">John's Map List</a>
+        </td>
+          <td>
+            <form method="POST" action="/urls<%= %>/delete">
+            <button type="submit">Delete</button>
+          </form>
+        </td>
+        </tr>
+      <% } %>
+    </tbody>
+
   </body>
 </html>
-
-<!-- loop through it - referance tinyapp referance what will be done in contribution & fav-->

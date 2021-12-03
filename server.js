@@ -1,3 +1,4 @@
+require('dotenv').config();
 const PORT = process.env.PORT || 8080;
 const sassMiddleware = require("./lib/sass-middleware");
 const express = require("express");
@@ -56,7 +57,6 @@ app.use("/api/auth", authRoutes(db));
 app.use("/api/widgets", widgetsRoutes(db));
 app.use("/map", mapDisplayRoutes(db));
 app.use("/maptesting", mapTesting(db));
-<<<<<<< Updated upstream
 app.use("/", usersRoutes(db));
 // app.use("/newmap", newMapRoutes(db));
 app.use("/newmarker", newMarkerRoute(db));
@@ -65,13 +65,6 @@ app.use("/deletemarker", deleteMarkerRoutes(db));
 app.use("/profile", waterProfile(db));
 
 //note review the structure of all the string with all app.uses
-=======
-app.use("/users", usersRoutes(db));
-app.use("/newmap", newMapRoutes(db));
-app.use("/newmarker", newMarkerRoute(db));
-app.use("/deletemarker", deleteMarkerRoutes(db));
-app.use("/maplist", mapList(db));
->>>>>>> Stashed changes
 
 // Note: mount other resources here, using the same pattern above
 
