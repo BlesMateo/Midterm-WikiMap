@@ -1,34 +1,61 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+      integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
+    <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
+    <link rel="stylesheet" href="/styles/main.css" type="text/css" />
+    <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
     <script src="routes/mapDisplayTest.js"></script>
+    <script type="text/javascript" src="/scripts/app.js"></script>
 
-    <title>Map Test: Sushi</title>
-    <h2 class="mapName">Editing: <%= title %></h2>
-    <p id="mapIdentity"><%= mapId %></p>
-    <p id="locationcenter"><%= mapLocation %></p>
+    <title>Edit Map | <%= title %></title>
+    <p class="hidden" id="mapIdentity"><%= mapId %></p>
+    <p class="hidden" id="locationcenter"><%= mapLocation %></p>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
     <meta charset="utf-8" />
     <style>
       /* Always set the map height explicitly to define the size of the div
      * element that contains the map. */
       #map {
-        height: 100%;
+        height: 700px;
+        width: 100%;
         background-color: grey;
       }
 
       /* Optional: Makes the sample page fill the window. */
-      html,
+      /* html,
       body {
         height: 100%;
         margin: 0;
         padding: 0;
-      }
+      } */
 
       /* TODO: Step 4A1: Make a generic sidebar */
       /* Styling for an info pane that slides out from the left.
     * Hidden by default. */
+
+      #here {
+        display: flex-end;
+        justify-content: flex-end;
+        align-items: flex-end;
+        height: 100%;
+        width: 100%;
+      }
+
       #panel {
         height: 100%;
         width: null;
@@ -70,6 +97,8 @@
   </head>
 
   <body>
+    <%- include('partials/_header') %>
+    <h2 class="editMapTitle mapName bold">Editing: <%= title %></h2>
     <div id="searchBar">
       <form id="searchForm">
         <div class="form-group">
@@ -92,12 +121,14 @@
             style="width: 300px"
           />
         </div>
-        <button type="submit" class="btn btn-primary">Search Places</button>
+        <button class="searchPlace" type="submit" class="btn btn-primary">
+          Search Places
+        </button>
       </form>
     </div>
     <!-- TODO: Step 4A2: Add a generic sidebar -->
     <!-- The slide-out panel for showing place details -->
-    <div id="panel"></div>
+    <div id="here"><div id="panel"></div></div>
 
     <!-- Map appears here -->
     <div id="map"></div>

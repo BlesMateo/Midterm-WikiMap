@@ -1,94 +1,130 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Home Page</title>
+    <title>Login | mappi</title>
 
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+      crossorigin="anonymous"
+    />
     <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
     <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
     <link rel="stylesheet" href="/styles/main.css" type="text/css" />
     <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
-    <link rel="stylesheet" href="/styles/profile_page.css" type="text/css" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+      integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
+      integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
 
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
     <script type="text/javascript" src="/scripts/app.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+      crossorigin="anonymous"
+    ></script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   </head>
 
-  <!-- MAKE A PARITAL HEADER FILE TO HOLD NAV DETAILS -->
+  <body>
+    <%- include('partials/_header') %>
 
+    <div class="back">
+      <span class="back_button">
+        <a type="button" class="btn btn-warning" href="/">← Back to Map List</a>
+      </span>
+    </div>
 
-<main>
+    <main class="profile_container">
+      <div id="profileDesc">
+        <img src="/images/istockphoto-1300972574-170667a.jpg" />
+        <p><strong>@James_Charles</strong></p>
+        <p>
+          Do you think you're living an ordinary life? You are so mistaken it's
+          difficult to even explain. The mere fact that you exist makes you
+          extraordinary. The odds of you existing are less than winning the
+          lottery, but here you are. Are you going to let this extraordinary
+          opportunity pass?
+        </p>
+        <P> #Coder </P>
+        <P> #TeamNoSleep </P>
+        <P> #LightHouseLabs </P>
+      </div>
 
-
-  <h3>My Maps</h3>
-    <table class="table">
-      <tbody>
-        <% for(let map of userMaps) { %>
-          <tr>
-            <td><%= map.title %></td>
-            <td>
-              <<form method="GET" action="/map/edit/<%= map.id %>">
-              <button type="submit">Edit</button>
-            </form>
-          </td>
-            <td>
-              <form method="POST" action="/<%=  %>/delete">
-              <button type="submit">Delete</button>
-            </form>
-          </td>
-          </tr>
-        <% } %>
-      </tbody>
-    </table>
-
-    <h3>Contributions</h3>
-    <table class="table">
-      <tbody>
-        <% for(let map of userContributions) { %>
-          <tr>
-            <td><%= map.title %></td>
-            <td>
-              <form method="GET" action="/contributions/:id <%= %>">
-              <button type="submit">Edit</button>
-            </form>
-          </td>
-            <td>
-              <form method="POST" action="/urls/<%= %>/delete">
-              <button type="submit">Delete</button>
-            </form>
-          </td>
-          </tr>
-        <% } %>
-      </tbody>
-    </table>
-
-    <h3>Favourites</h3>
-    <table class="table">
-      <tbody>
-        <% for(let map of userFavourite) { %>
-          <tr>
-            <td><%= map.title %></td>
-            <td>
-              <form method="GET" action="/urls/<%= %>">
-              <button type="submit">Edit</button>
-            </form>
-          </td>
-            <td>
-              <form method="POST" action="/urls/<%= %>/delete">
-              <button type="submit">Delete</button>
-            </form>
-          </td>
-          </tr>
-        <% } %>
-      </tbody>
-
-        <span class="button">
-         <a id="arrow-back-button" class="button-text" href="/">← Back to Map List</a>
-          </span>
-
-
-    </table>
-  </main>
+      <div class="username">
+        <article class="myMaps">
+          <h3><i class="far fa-map thick outline"></i>My Maps</h3>
+        </article>
+        <article class="mapsContent">
+          <table class="table">
+            <tbody class="bar_footer">
+              <% for(let map of userMaps) { %>
+              <tr>
+                <td><a href="/map/new/<%=map.id%>"><%= map.title %></a></td>
+                <td>
+                  <form method="GET" action="/map/edit/<%=map. id%>">
+                    <button class="buttonStyle" type="submit">
+                      <i class="fas fa-pencil"></i>
+                    </button>
+                  </form>
+                </td>
+              </tr>
+              <% } %>
+            </tbody>
+          </table>
+        </article>
+        <article class="myContributions">
+          <h3><i class="far fa-star thick outline"></i>Contributions</h3>
+        </article>
+        <article class="contributeBody">
+          <table class="table">
+            <tbody class="bar_footer">
+              <div class="myMapList">
+                <% for(let map of userContributions) { %>
+                <tr>
+                  <td><a href="/map/new/<%=map.id%>"><%= map.title %></a></td>
+                  <td>
+                    <form method="GET" action="/map/edit/<%=map. id%>">
+                      <button class="buttonStyle" type="submit">
+                        <i class="fas fa-pencil"></i>
+                      </button>
+                    </form>
+                  </td>
+                </tr>
+                <% } %>
+              </div>
+            </tbody>
+          </table>
+        </article>
+        <article class="myFavourites">
+          <h3><i class="far fa-flag thick outline"></i>Favourites</h3>
+        </article>
+        <article class="favBody">
+          <table class="table">
+            <tbody class="bar_footer">
+              <% for(let map of userFavourite) { console.log('hello', map) %>
+              <tr>
+                <td><a href="/map/new/<%=map.id%>"><%= map.title %></a></td>
+                <td>
+                </td>
+              </tr>
+              <% } %>
+            </tbody>
+          </table>
+        </article>
+      </div>
+    </main>
+  </body>
 </html>
-
-
-

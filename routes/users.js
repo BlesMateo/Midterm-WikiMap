@@ -65,8 +65,8 @@ module.exports = (db) => {
   // })
 
   //GET Route to user's favourites
-  router.get("/favourites/:id", (req, res) => {
-    const userId = req.params.id;
+  router.get("/favourites", (req, res) => {
+    const userId = req.session.user_id;
     getFavouriteMaps(userId, db)
       .then(maps => res.json(maps))
       .catch(err => {
@@ -78,8 +78,8 @@ module.exports = (db) => {
 
   // This route is to be impletmented and tested/ route should be /favourites/:id
   router.post("/favourites/:id", (req, res) => {
-    const userId = req.params.id;
-    const mapId = req.body.mapId
+    const userId = req.session.user_id;
+    const mapId = req.params.id;
     addFavouriteMap(userId, mapId, db)
       .then(() => {
         return getFavouriteMaps(userId, db);
