@@ -12,17 +12,23 @@ const { addFavouriteMap, getFavouriteMaps } = require('../lib/userQueries');
 
 module.exports = (db) => {
 
-  //TO BE REVIEWED - ADJUST TO MAKE A HOMEPAGE
   router.get("/", (req, res) => {
     // const templateVars =  { mapId: req.params.mapId }
     console.log("-------------------")
     return db
-      .query(`SELECT title FROM maps
-              LIMIT 3`)
+      .query(`SELECT title, id FROM maps
+              LIMIT 5`)
       .then(result => {
-        console.log("==============", result.rows)
-        if (result.rows[0]) {
-          let templateVars = { list0: result.rows[0].title, list1: result.rows[1].title }
+        console.log("HERE", result.rows)
+        if (result.rows.length) {
+          let mapData = [];
+          for (let i = 0; i < result.rows.length; i++) {
+            let { id, title } = result.rows[i];
+            let obj = { id, title }
+            mapData.push(obj)
+          }
+          console.log(mapData);
+          let templateVars = { mapData }
           res.render("mapList", templateVars)
           return result.rows[0];
         } else {

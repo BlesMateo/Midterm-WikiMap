@@ -8,9 +8,22 @@
 const express = require('express');
 const router = express.Router();
 
+
 module.exports = (db) => {
 
-
+  const getUserByEmail = function (email, db) {
+    // console.log("__email", email)
+    return db.query(`SELECT * FROM users WHERE email = $1;`, [email])
+      .then(data => {
+        const user = data.rows[0];
+        // console.log("%%%%%%%%%%%", user)
+        return user
+      })
+      .catch(err => {
+        console.log(err.message)
+        return err.message
+      });
+  }
 
   router.post("/register7", (req, res) => {
     console.log(req.body)
@@ -96,19 +109,5 @@ module.exports = (db) => {
 
   return router;
 };
-
-const getUserByEmail = function (email, db) {
-  // console.log("__email", email)
-  return db.query(`SELECT * FROM users WHERE email = $1;`, [email])
-    .then(data => {
-      const user = data.rows[0];
-      // console.log("%%%%%%%%%%%", user)
-      return user
-    })
-    .catch(err => {
-      console.log(err.message)
-      return err.message
-    });
-}
 
 

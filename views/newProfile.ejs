@@ -18,6 +18,7 @@
 
 <main>
 
+
   <h3>My Maps</h3>
     <table class="table">
       <tbody>
@@ -25,12 +26,12 @@
           <tr>
             <td><%= map.title %></td>
             <td>
-              <form method="GET" action="/edit/:mapId<%= %>">
+              <<form method="GET" action="/map/edit/<%= map.id %>">
               <button type="submit">Edit</button>
             </form>
           </td>
             <td>
-              <form method="POST" action="#<%= %>/delete">
+              <form method="POST" action="/<%=  %>/delete">
               <button type="submit">Delete</button>
             </form>
           </td>
@@ -46,7 +47,7 @@
           <tr>
             <td><%= map.title %></td>
             <td>
-              <form method="GET" action="/contributions/:id<%= %>">
+              <form method="GET" action="/contributions/:id <%= %>">
               <button type="submit">Edit</button>
             </form>
           </td>
@@ -60,10 +61,10 @@
       </tbody>
     </table>
 
-    <h3>Favorites</h3>
+    <h3>Favourites</h3>
     <table class="table">
       <tbody>
-        <% for(let map of userFavorite) { %>
+        <% for(let map of userFavourite) { %>
           <tr>
             <td><%= map.title %></td>
             <td>
@@ -79,6 +80,12 @@
           </tr>
         <% } %>
       </tbody>
+
+        <span class="button">
+         <a id="arrow-back-button" class="button-text" href="/">← Back to Map List</a>
+          </span>
+
+
     </table>
   </main>
 </html>
