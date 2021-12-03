@@ -1,86 +1,48 @@
-<<<<<<< HEAD
-
-
+<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Lexend+Deca:wght@300&display=swap" rel="stylesheet">
+<script>
+    $(function(){
+        $('a').each(function(){
+            if ($(this).prop('href') === window.location.href) {
+                $(this).addClass('active'); $(this).parents('li').addClass('active');
+            }
+        });
+    });
+</script>
 <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
+  <div id="logo"><a class="nav-link" href="/"><img src="/images/Blue and Pink Minimalist Boba Milk Tea Logo (2) (1).png"></a></div>
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">MaPPi</a>
+
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarScroll">
       <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
+          <a class="nav-link" href="/">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
+          <a class="nav-link" aria-current="page" href="/map/new">Create new map</a>
         </li>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Link
+          <a class="nav-link dropdown-toggle" href="/heh" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            My Maps
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li><a class="dropdown-item" href="/contributions/:id">Contributions</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
+            <li><a class="dropdown-item" href="/favourites/:id">Favourites</a></li>
           </ul>
         </li>
-        <li class="nav-item">
-          <a class="nav-link disabled">Link</a>
+        <div class="pull-right rightNav">
+        <li id="test" class="nav-item">
+          <a class="nav-link" href="/login">Login</a>
         </li>
+      </div>
+      </div>
       </ul>
-      <form class="d-flex">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
     </div>
   </div>
 </nav>
-=======
-<!DOCTYPE html>
-<html lang="en">
-  <header>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="/">Navbar</a>
-        <img
-          src="/public/images/WikiMap-logos_black.png"
-          alt=""
-          width="30"
-          height="24"
-          class="d-inline-block align-text-top"
-        />
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNavAltMarkup"
-          aria-controls="navbarNavAltMarkup"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <!-- login route is /login READDD MEE-->
-          <!-- Register route is /register READDD MEE-->
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-          <div class="navbar-nav">
-            <a class="nav-link active" aria-current="page" href="/">Home</a>
-            <a class="nav-link active" aria-current="page" href="/new/:mapId"
-              ><strong>Create</strong> New Map</a
-            >
-            <a class="nav-link" href="/contributions/:id">Contributions</a>
-            <a class="nav-link" href="/favourites/:id">Favorites</a>
-            <a class="nav-link" href="/logout">Logout</a>
-          </div>
-        </div>
-      </div>
-    </nav>
-  </header>
-
-  <main style="margin: 1em">
-    <h3>Profile</h3>
-  </main>
-</html>
->>>>>>> master

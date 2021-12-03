@@ -30,11 +30,15 @@ for (count = 0; count < markers.length; count++) {
     });
 google.maps.event.addListener(marker, 'click', (function (marker, count) {
       return function () {
-        infowindow.setContent(name);
+        infowindow.setContent(markers[count].name);
         infowindow.open(map, marker);
+
+
       }
     })(marker, count));
   }
+
+
 }
 //Geo Function to center in on a location
 function geoFunc(keyword, location) {
