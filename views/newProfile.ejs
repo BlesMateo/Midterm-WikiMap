@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Home Page</title>
+
+    <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
+    <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
+    <link rel="stylesheet" href="/styles/main.css" type="text/css" />
+    <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+    <link rel="stylesheet" href="/styles/profile_page.css" type="text/css" />
+
+    <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
+    <script type="text/javascript" src="/scripts/app.js"></script>
+  </head>
+
+  <!-- MAKE A PARITAL HEADER FILE TO HOLD NAV DETAILS -->
+
+
+<main>
+
+  <h3>My Maps</h3>
+    <table class="table">
+      <tbody>
+        <% for(let map of userMaps) { %>
+          <tr>
+            <td><%= map.title %></td>
+            <td>
+              <form method="GET" action="/edit/:mapId<%= %>">
+              <button type="submit">Edit</button>
+            </form>
+          </td>
+            <td>
+              <form method="POST" action="#<%= %>/delete">
+              <button type="submit">Delete</button>
+            </form>
+          </td>
+          </tr>
+        <% } %>
+      </tbody>
+    </table>
+
+    <h3>Contributions</h3>
+    <table class="table">
+      <tbody>
+        <% for(let map of userContributions) { %>
+          <tr>
+            <td><%= map.title %></td>
+            <td>
+              <form method="GET" action="/contributions/:id<%= %>">
+              <button type="submit">Edit</button>
+            </form>
+          </td>
+            <td>
+              <form method="POST" action="/urls/<%= %>/delete">
+              <button type="submit">Delete</button>
+            </form>
+          </td>
+          </tr>
+        <% } %>
+      </tbody>
+    </table>
+
+    <h3>Favorites</h3>
+    <table class="table">
+      <tbody>
+        <% for(let map of userFavorite) { %>
+          <tr>
+            <td><%= map.title %></td>
+            <td>
+              <form method="GET" action="/urls/<%= %>">
+              <button type="submit">Edit</button>
+            </form>
+          </td>
+            <td>
+              <form method="POST" action="/urls/<%= %>/delete">
+              <button type="submit">Delete</button>
+            </form>
+          </td>
+          </tr>
+        <% } %>
+      </tbody>
+    </table>
+  </main>
+</html>
+
+
+
