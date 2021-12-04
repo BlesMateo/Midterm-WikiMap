@@ -36,8 +36,22 @@ The following steps are only for _one_ of the group members to perform.
   - It runs through each of the files, in order, and executes them against the database. 
   - Note: you will lose all newly created (test) data each time this is run, since the schema files will tend to `DROP` the tables and recreate them.
 
+## Final Product
+
+!["WikiMap_Homepage"](https://github.com/BlesMateo/Midterm-WikiMap/blob/master/public/images/WikiMap_Homepage.PNG?raw=true)
+
+!["WikiMap_Profile"](https://github.com/BlesMateo/Midterm-WikiMap/blob/master/public/images/WikiMap_Profile.PNG?raw=true)
+
+!["WikiMap_Edit_Map"](https://github.com/BlesMateo/Midterm-WikiMap/blob/master/public/images/WikiMap_Edit_Map.PNG?raw=true)
+
+!["WikiMap_Edit_Map_New_Marker"](https://github.com/BlesMateo/Midterm-WikiMap/blob/master/public/images/WikiMap_Edit_Map_New_Marker.PNG?raw=true)
+
+
+
 ## Dependencies
 
 - Node 10.x or above
 - NPM 5.x or above
 - PG 6.x
+
+
