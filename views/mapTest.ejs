@@ -98,6 +98,11 @@
 
   <body>
     <%- include('partials/_header') %>
+    <div class="back">
+      <span class="back_button">
+        <a type="button" class="btn btn-warning" href="/map/new/<%= mapId %>">← Back to Map</a>
+      </span>
+    </div>
     <h2 class="editMapTitle mapName bold">Editing: <%= title %></h2>
     <div id="searchBar">
       <form id="searchForm">
